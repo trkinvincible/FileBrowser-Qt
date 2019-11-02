@@ -21,8 +21,7 @@ DragableGridLayout::DragableGridLayout(QWidget *parent)
 void DragableGridLayout::on_listView_clicked(const QModelIndex &index)
 {
     qDebug() << __FUNCTION__;
-    DraggedFilePath_ = SubDirGridViewModel_->filePath(index);
-    DraggedImg_ = QPixmap(SubDirGridViewModel_->filePath(index));
+    DraggedFileUrl_ = (QUrl::fromLocalFile(SubDirGridViewModel_->filePath(index)));
 }
 
 void DragableGridLayout::mousePressEvent(QMouseEvent *event)
@@ -44,9 +43,9 @@ void DragableGridLayout::mouseMoveEvent(QMouseEvent *event)
 
     QDrag *drag = new QDrag(this);
     QMimeData *mimeData = new QMimeData;
-    mimeData->setText(DraggedFilePath_);
+    QList<QUrl> l{DraggedFileUrl_};
+    mimeData->setUrls(std::move(l));
     drag->setMimeData(mimeData);
-    drag->setPixmap(DraggedImg_);
 
     Qt::DropAction dropAction = drag->exec();
 }

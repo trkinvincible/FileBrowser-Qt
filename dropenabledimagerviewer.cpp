@@ -1,6 +1,7 @@
 #include "dropenabledimagerviewer.h"
 #include <QDropEvent>
 #include <QMimeData>
+#include <QDebug>
 
 DropEnabledImagerViewer::DropEnabledImagerViewer(QWidget *parent):QLabel(parent)
 {
@@ -9,14 +10,13 @@ DropEnabledImagerViewer::DropEnabledImagerViewer(QWidget *parent):QLabel(parent)
 
 void DropEnabledImagerViewer::dragEnterEvent(QDragEnterEvent *event)
 {
-//    if (event->mimeData()->hasFormat("image"))
-        event->acceptProposedAction();
+    event->acceptProposedAction();
 }
 
 void DropEnabledImagerViewer::dropEvent(QDropEvent *event)
 {
-    QPixmap temp(event->mimeData()->text());
-//    temp.scaled(300,300,Qt::AspectRatioMode::KeepAspectRatio, Qt::SmoothTransformation);
+    qDebug() << event->mimeData()->urls();
+    QPixmap temp(event->mimeData()->urls().back().toLocalFile());
     setPixmap(temp);
     adjustSize();
     event->acceptProposedAction();

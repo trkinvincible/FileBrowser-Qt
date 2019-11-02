@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QListView>
 #include <QFileSystemModel>
+#include <QUrl>
 
 class DragableGridLayout : public QListView
 {
@@ -21,8 +22,7 @@ private slots:
 private:
     QFileSystemModel *SubDirGridViewModel_;
     QPoint DragStartPosition_;
-    QPixmap DraggedImg_;
-    QString DraggedFilePath_;
+    QUrl DraggedFileUrl_;
 };
 
 #endif // DRAGABLEGRIDLAYOUT_H
